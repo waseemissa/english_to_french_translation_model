@@ -16,7 +16,7 @@ We moved to deployment by creating a Docker account and a Heroku account then ap
 heroku login (after installing Heroku CLI)
 sudo docker login --username=OUR USERNAME --password=OUR PASSWORD
 sudo heroku container:login
-heroku create translator-waseem-ghadi
-heroku git:remote -a translator-waseem-ghadi
-sudo heroku container:push web --app translator-waseem-ghadi
-sudo heroku container:release web --app translator-waseem-ghadi
+heroku create translator-ghadi-waseem
+heroku git:remote -a translator-ghadi-waseem
+sudo heroku container:push web --app translator-ghadi-waseem
+sudo heroku container:release web --app translator-ghadi-waseem
