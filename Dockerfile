@@ -10,6 +10,7 @@ RUN pip install -r requirements.txt
 
 # Copy the relevant directories
 COPY model/ ./model
+COPY templates/ ./templates
 COPY . ./
 
 # Run the web server

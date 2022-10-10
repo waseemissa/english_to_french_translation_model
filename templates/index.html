@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background: linear-gradient(to left top, blue, red);
+        background-attachment: fixed; 
+      }
+      .main-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container-title {
+        font-size: 30px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+      }
+
+      .translation-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        margin-top: 30px;
+      }
+
+      .btn-translate {
+        background-color: #150ba6;
+        border-radius: 15px;
+        height: 40px;
+        width: 150px;
+        margin: 0px 10px;
+        cursor: pointer;
+      }
+
+      .translate-btn-hover {
+        width: 160px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        margin: 20px;
+        height: 55px;
+        text-align: center;
+        border: none;
+        background-size: 300% 100%;
+        border-radius: 50px;
+        -o-transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .translate-btn-hover:hover {
+        background-position: 100% 0;
+        -o-transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .translate-btn-hover:focus {
+        outline: none;
+      }
+
+      .translate-btn-hover.btn {
+        background-image: linear-gradient(
+          to right,
+          #ed6ea0,
+          #ec8c69,
+          #f7186a,
+          #fbb03b
+        );
+        box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+      }
+
+      .text-area-translate {
+        background-color: #dc162a45;
+        color: white;
+      }
+      .area-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 15px;
+        color: white;
+      }
+    </style>
+    <title>English To French Translation - Ghadi & Waseem</title>
+  </head>
+  <body>
+    <div class="main-container">
+      <div>
+        <div class="container-title">
+          <label>Week 10 Challenge: Machine Translation Model</label>
+
+          <label>Waseem Issa & Ghadi Mhanna</label>
+        </div>
+
+        <div class="translation-container">
+          <div class="area-container">
+            <label>Enter Text To Translate</label>
+            <textarea
+              id="input-text-translate"
+              name="input-text-translate"
+              placeholder="Enter text to translate"
+              class="text-area-translate"
+              rows="4"
+              cols="50"
+              onkeydown="checkWordLen(this);"
+            ></textarea>
+          </div>
+          <button class="translate-btn-hover btn" onclick="getTranslation()">Translate</button>
+          <div class="area-container">
+            <label>
+                This is the translated text
+            </label>
+            <textarea
+              id="output-text-translate"
+              name="output-text-translate"
+              placeholder="Here you will see translated text"
+              class="text-area-translate"
+              rows="4"
+              cols="50"
+              disabled
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var wordLen = 15; 
+      function checkWordLen(obj) {
+        var len = obj.value.split(/[\s]+/);
+        if (len.length > wordLen) {
+          alert(
+            "You cannot put more than " + wordLen + " words in this text area."
+          );
+          obj.oldValue = obj.value != obj.oldValue ? obj.value : obj.oldValue;
+          obj.value = obj.oldValue ? obj.oldValue : "";
+          return false;
+        }
+        return true;
+      }
+
+    async function getRequest(url) {
+        const res = await fetch(url, {
+                method: 'GET', 
+                mode: 'cors', 
+                })
+        if (res.ok) { 
+            return res.json();
+        } else {
+            throw new Error("Bad response");
+        }
+    }
+
+    async function getTranslation() {
+        var english_sentence = document.getElementById('input-text-translate').value;
+        const url = `http://127.0.0.1:8000/translate?english_sentence=${english_sentence}`;
+        try {
+            const data = await getRequest(url);
+            document.getElementById('output-text-translate').innerHTML = data.french_translation
+        } catch(e) {
+            alert(`Error Getting Tranlation: ${e}`)
+            console.log(e);
+        }
+    }
+
+    </script>
+  </body>
+</html>
