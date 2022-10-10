@@ -162,7 +162,7 @@
 
     async function getTranslation() {
         var english_sentence = document.getElementById('input-text-translate').value;
-        const url = `http://127.0.0.1:8000/translate?english_sentence=${english_sentence}`;
+        const url = `https://translator-ghadi-waseem.herokuapp.com/translate?english_sentence=${english_sentence}`;
         try {
             const data = await getRequest(url);
             document.getElementById('output-text-translate').innerHTML = data.french_translation
